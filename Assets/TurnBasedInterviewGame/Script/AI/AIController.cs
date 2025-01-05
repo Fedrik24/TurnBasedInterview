@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
 {
-    public class AIController : CharacterAbility
+    public class AIController : CharacterAbility, IAction
     {
         [SerializeField] private PatrolPath patrolPath;
         [SerializeField] private float chaseDistance = 5f;
@@ -93,6 +93,11 @@ namespace TurnBasedGame.AI.Controller
         private void AttackState()
         {
             timeSinceLastSawPlayer = 0;
+            // Move to Player
+            if(player is not null){
+                mover.MoveTo(player.transform.position);
+            }
+
         }
 
         private bool InAttackRange()
@@ -107,6 +112,11 @@ namespace TurnBasedGame.AI.Controller
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
+
+        public void Cancel()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -56,8 +56,6 @@ namespace TurnBasedGame.Ability
 
             // Apply vertical velocity
             characterController.Move(velocity * Time.deltaTime);
-            Debug.Log($"Is Moving : {isMove}");
-            Debug.Log($"Move : {currentSpeed}");
         }
 
         public override void UpdateAnimator()
