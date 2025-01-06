@@ -1,3 +1,4 @@
+using TurnBasedGame.Ability;
 using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
@@ -5,6 +6,7 @@ namespace TurnBasedGame.AI.Controller
     public class AIController : CharacterAbility, IAction
     {
         [SerializeField] private PatrolPath patrolPath;
+        [SerializeField] private AttackController attack;
         [SerializeField] private float chaseDistance = 5f;
         [SerializeField] private float suspiscionTime = 3f;
         [SerializeField] private float waypointDwellTime = 3f;
@@ -96,8 +98,18 @@ namespace TurnBasedGame.AI.Controller
             // Move to Player
             if(player is not null){
                 mover.MoveTo(player.transform.position);
+                if(IsInRange())
+                {
+                    Debug.Log($"Attacking Player");
+                    attack.Attack();
+                }
             }
 
+        }
+
+        private bool IsInRange()
+        {
+            return Vector3.Distance(transform.position, player.transform.position) < 3f;
         }
 
         private bool InAttackRange()
@@ -106,13 +118,6 @@ namespace TurnBasedGame.AI.Controller
             return distanceToPlayer < chaseDistance;
         }
 
-        // Unity Fuction
-        // TODO - Make Gizmos in core/ make new utility folder
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, chaseDistance);
-        }
 
         public void Cancel()
         {

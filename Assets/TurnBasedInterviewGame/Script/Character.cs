@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TurnBasedGame.Type;
 using UnityEngine;
 
 namespace TurnBasedGame
@@ -9,6 +10,8 @@ namespace TurnBasedGame
         public Animator animator;
         private CharacterAbility[] characterAbilities;
         private bool hasCachedAbility = false;
+
+        public CharacterType characterType;
 
         private void Awake()
         {
@@ -43,7 +46,13 @@ namespace TurnBasedGame
                 }
             }
         }
+        
+        public void TakeDamage()
+        {
+            Debug.Log($"Enemies got attacked!");
+        }
 
     }
 }
+
 
