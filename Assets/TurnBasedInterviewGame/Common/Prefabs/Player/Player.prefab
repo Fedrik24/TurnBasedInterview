@@ -4940,6 +4940,7 @@ GameObject:
   - component: {fileID: 9100109176412974009}
   - component: {fileID: 1926473727000472124}
   - component: {fileID: 635052802065176204}
+  - component: {fileID: 4977183205801893221}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -5064,6 +5065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1762018173025169313}
+  characterType: 1
 --- !u!114 &9100109176412974009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5110,6 +5112,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAlive: 1
+--- !u!114 &4977183205801893221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762018173025169312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce5b08f509fa0c45a0254b05e4574bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAlive: 1
+  attackRange: 5
+  attackCooldown: 1
+  damage: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1762018173044623599
 GameObject:
   m_ObjectHideFlags: 0

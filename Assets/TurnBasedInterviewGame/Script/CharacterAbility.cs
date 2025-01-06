@@ -8,7 +8,7 @@ namespace TurnBasedGame
     {
         public bool IsAlive = true;
         private Animator animator;
-        private Character character;
+        public Character character;
 
         private void Awake()
         {

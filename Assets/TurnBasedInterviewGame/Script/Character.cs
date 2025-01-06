@@ -47,9 +47,19 @@ namespace TurnBasedGame
             }
         }
         
-        public void TakeDamage()
+        public void TakeDamage(Character attacker)
         {
-            Debug.Log($"Enemies got attacked!");
+            Debug.Log($"{attacker.characterType} attacked {characterType}!");
+            if(attacker.characterType == CharacterType.Player)
+            {
+                // Enemy Attack Player
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
+            }
+            else 
+            {
+                // Player Attack Enemy
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
+            }
         }
 
     }

@@ -37,7 +37,7 @@ namespace TurnBasedGame.Ability
         {
             float moveX = Input.GetAxis("Horizontal");
             float moveZ = Input.GetAxis("Vertical");
-
+            
             Vector3 move = transform.right * moveX + transform.forward * moveZ;
             characterController.Move(move * speed * Time.deltaTime);
 

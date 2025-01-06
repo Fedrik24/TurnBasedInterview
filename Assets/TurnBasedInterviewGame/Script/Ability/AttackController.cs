@@ -45,8 +45,7 @@ namespace TurnBasedGame.Ability
 
             foreach (Collider enemy in hitEnemies)
             {
-                // Assuming enemies have a script with a method to take damage
-                enemy.GetComponent<Character>()?.TakeDamage();
+                enemy.GetComponent<Character>()?.TakeDamage(character);
             }
 
             // Reset attack animation

@@ -4942,6 +4942,7 @@ GameObject:
   - component: {fileID: 8374949583735155884}
   - component: {fileID: 59902564975026228}
   - component: {fileID: 8690011873690234866}
+  - component: {fileID: 546449955641386559}
   m_Layer: 6
   m_Name: Enemies
   m_TagString: Enemy
@@ -5061,6 +5062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsAlive: 1
   patrolPath: {fileID: 0}
+  attack: {fileID: 546449955641386559}
   chaseDistance: 5
   suspiscionTime: 10
   waypointDwellTime: 3
@@ -5123,6 +5125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1762018173025169313}
+  characterType: 2
 --- !u!114 &8690011873690234866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5136,6 +5139,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAlive: 1
+--- !u!114 &546449955641386559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762018173025169312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce5b08f509fa0c45a0254b05e4574bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsAlive: 1
+  attackRange: 5
+  attackCooldown: 1
+  damage: 10
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1762018173044623599
 GameObject:
   m_ObjectHideFlags: 0
