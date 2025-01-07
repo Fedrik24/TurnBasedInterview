@@ -17,9 +17,16 @@ namespace TurnBasedGame.Ability
 
         private void Update()
         {
-            if (Input.GetButtonDown("Fire1") && Time.time > lastAttackTime + attackCooldown)
+            if (character.gameState == Type.GameState.Battle)
             {
-                Attack();
+
+            }
+            else
+            {
+                if (Input.GetButtonDown("Fire1") && Time.time > lastAttackTime + attackCooldown)
+                {
+                    Attack();
+                }
             }
         }
 

@@ -1,4 +1,7 @@
+using System;
 using TurnBasedGame.Ability;
+using TurnBasedGame.Type;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
@@ -10,15 +13,19 @@ namespace TurnBasedGame.AI.Controller
         [SerializeField] private float chaseDistance = 5f;
         [SerializeField] private float suspiscionTime = 3f;
         [SerializeField] private float waypointDwellTime = 3f;
+        [SerializeField] private float delayAttack = 5f;
+        [SerializeField] private float attackTime = 5f;
 
         private GameObject player;
         private Mover mover;
         private Vector3 guardPosition;
+        private GameState gameState;
 
         private float timeSinceLastSawPlayer = Mathf.Infinity;
         private float timeSinceArriveAtWayPoint = Mathf.Infinity;
         private float wayPointTolerance = 1f;
         private int currentWaypointIndex = 0;
+        private bool canAttackNow = false;
 
         private void Start()
         {
@@ -29,9 +36,22 @@ namespace TurnBasedGame.AI.Controller
 
         private void Update()
         {
+            if (character.gameState == GameState.Battle) return;
             if (InAttackRange())
             {
-                AttackState();
+                mover.MoveTo(player.transform.position);
+                if(canAttackNow)
+                {
+                    AttackState();
+                }
+                if(attackTime < delayAttack)
+                {
+                    attackTime += Time.deltaTime;
+                }
+                else
+                {
+                    canAttackNow = true;
+                }
             }
             else if (timeSinceLastSawPlayer < suspiscionTime)
             {
@@ -97,11 +117,11 @@ namespace TurnBasedGame.AI.Controller
             timeSinceLastSawPlayer = 0;
             // Move to Player
             if(player is not null){
-                mover.MoveTo(player.transform.position);
                 if(IsInRange())
                 {
-                    Debug.Log($"Attacking Player");
                     attack.Attack();
+                    attackTime = 0;
+                    canAttackNow = false;
                 }
             }
 

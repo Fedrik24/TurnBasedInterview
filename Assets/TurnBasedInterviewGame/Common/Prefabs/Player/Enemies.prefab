@@ -5061,11 +5061,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAlive: 1
+  character: {fileID: 0}
   patrolPath: {fileID: 0}
   attack: {fileID: 546449955641386559}
   chaseDistance: 5
   suspiscionTime: 10
   waypointDwellTime: 3
+  delayAttack: 5
+  attackTime: 0
 --- !u!114 &7998938300312866973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5125,7 +5128,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1762018173025169313}
+  gameState: 0
   characterType: 2
+  characterData: {fileID: 11400000, guid: 01d2c56f113476f468f64cc7f8376e7b, type: 2}
+  healthPoint: 100
+  defensePoint: 50
+  attack: 10
 --- !u!114 &8690011873690234866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5139,6 +5147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAlive: 1
+  character: {fileID: 0}
 --- !u!114 &546449955641386559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5152,6 +5161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAlive: 1
+  character: {fileID: 0}
   attackRange: 5
   attackCooldown: 1
   damage: 10

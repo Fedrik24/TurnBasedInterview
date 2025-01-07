@@ -1,9 +1,13 @@
+using System;
+using TurnBasedGame.Type;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace TurnBasedGame.Ability
 {
-    public class PlayerController : CharacterAbility
+    public class PlayerController : CharacterAbility,IDisposable
     {
         // Player movement settings
         public float speed = 5f;
@@ -28,8 +32,14 @@ namespace TurnBasedGame.Ability
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+
         private void Update()
         {
+            if(character.gameState == GameState.Battle)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                return;
+            }
             HandleMovement();
         }
 
@@ -62,6 +72,10 @@ namespace TurnBasedGame.Ability
         {
             UpdateAnimatorBool("Running", isMove);
             UpdateAnimatorFloat("Speed", currentSpeed);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

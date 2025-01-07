@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using TurnBasedGame.UI;
+using Cinemachine;
+using TurnBasedGame.Type;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TurnBasedGame
 {
     public class BattleManager : MonoBehaviour
     {
         public static BattleManager Instance;
+
+        [SerializeField] private GameData gameData;
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private CinemachineVirtualCamera battlaCamera;
 
         private void Awake()
         {
@@ -17,36 +23,30 @@ namespace TurnBasedGame
 
         public IEnumerator PrepareBattle(Character attacker, Character defender, bool playerInitiated)
         {
-            // Freeze the exploration state
-            FreezeExploration();
+            FreezeExploration(attacker,defender);
 
-            // Play transition animation or effects
             yield return PlayTransitionEffects();
 
-            // Prepare battle data
             SetupBattle(attacker, defender, playerInitiated);
 
-            // Transition to battle
             TransitionToBattle();
         }
 
-        private void FreezeExploration()
+        private void FreezeExploration(Character attacker, Character defender)
         {
-            // Disable player and enemy movement
             Debug.Log("Exploration frozen!");
+            StaticGlobalEvent.OnCharacterBattle?.Invoke(attacker,defender);
+
         }
 
         private IEnumerator PlayTransitionEffects()
         {
             Debug.Log("Playing transition effects...");
-            UIManager.Instance.FadeIn();
-            yield return new WaitForSeconds(1f); // Simulate transition delay
-            UIManager.Instance.FadeOut();
+            yield return new WaitForSeconds(1f); 
         }
 
         private void TransitionToBattle()
         {
-            // Switch to battle scene or activate battle mode
             Debug.Log("Transitioning to battle...");
             StartBattle();
         }
@@ -54,13 +54,15 @@ namespace TurnBasedGame
         public void SetupBattle(Character attacker, Character defender, bool playerInitiated)
         {
             Debug.Log($"Setting up battle: {attacker.characterType} vs {defender.characterType}");
-            // Prepare battle data here
+            gameData.GameState = GameState.Battle;
+            gameData.PlayerInitiated = playerInitiated;
+            StaticGlobalEvent.OnGameData?.Invoke(gameData);
         }
 
         public void StartBattle()
         {
-            // Load battle scene or activate battle overlay
-            Debug.Log("Battle started!");
+            // Set Camera Priority
+            battlaCamera.Priority = 11;
         }
     }
 

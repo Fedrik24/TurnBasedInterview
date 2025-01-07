@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TurnBasedGame.Type;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,34 +7,51 @@ namespace TurnBasedGame.UI
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager Instance;
-
-        [SerializeField] private Image img;
-
+        [SerializeField] private GameObject EnemyInfo;
+        [SerializeField] private GameObject TurnInfo;
+        [SerializeField] private GameObject AttackPanel;
+        [SerializeField] private Image playerTurnImage;
+        [SerializeField] private Image enemyTurnImage;
         private void Awake()
         {
-            if (Instance == null) Instance = this;
-            else Destroy(gameObject);
+            StaticGlobalEvent.OnGameStateChanged += GameStateHandler;
+            StaticGlobalEvent.OnGameData += GameDataHandler;
         }
 
-        public void FadeIn()
+        private void GameDataHandler(GameData data)
         {
-            // Implement FadeIn
-            for (float i = 0; i <= 1; i += Time.deltaTime)
+            // Initalize who attack first.
+            if (data.PlayerInitiated)
             {
-                // set color with i as alpha
-                img.color = new Color(31, 26, 26, i);
+                playerTurnImage.color = new Color(255, 255, 255, 255);
+            }
+            else
+            {
+                enemyTurnImage.color = new Color(255, 255, 255, 255);
             }
         }
 
-        public void FadeOut()
+        private void GameStateHandler(GameState state)
         {
-            // Implement FadeOut
-            for (float i = 1; i >= 0; i -= Time.deltaTime)
+            if (state == GameState.Battle)
             {
-                // set color with i as alpha
-                img.color = new Color(31, 26, 26, i);
+                EnemyInfo.SetActive(true);
+                TurnInfo.SetActive(true);
+                AttackPanel.SetActive(true);
             }
+        }
+
+        public void OnAttackClick()
+        {
+            Debug.Log($"Player Attack !");
+            // send event to gamemanager. let the game manager handled.
+            StaticGlobalEvent.OnAttackButtonClick?.Invoke(true);
+        }
+
+        public void OnDefenseClick()
+        {
+            Debug.Log($"Player Defense !");
+            StaticGlobalEvent.OnDefenseButtonClick?.Invoke(true);
         }
     }
 }

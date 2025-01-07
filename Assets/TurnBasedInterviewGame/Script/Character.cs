@@ -8,14 +8,30 @@ namespace TurnBasedGame
     public class Character : MonoBehaviour
     {
         public Animator animator;
+        public GameState gameState;
         private CharacterAbility[] characterAbilities;
         private bool hasCachedAbility = false;
-
         public CharacterType characterType;
+        public CharacterData characterData;
+
+        // Character Data
+        [SerializeField] private float healthPoint;
+        [SerializeField] private float defensePoint;
+        [SerializeField] private int attack;
+        
 
         private void Awake()
         {
             if(!hasCachedAbility) CacheAbilities();
+            //gameState = GameState.Exploring; // Temp
+            SetUpCharacterData();
+        }
+
+        private void SetUpCharacterData()
+        {
+            characterData.HealthPoint = healthPoint;
+            characterData.DefensePoint = defensePoint;
+            characterData.Attack = attack;
         }
 
 
@@ -46,19 +62,26 @@ namespace TurnBasedGame
                 }
             }
         }
+
+        public void SetGameState(GameState state)
+        {
+            Debug.Log($"Is This Called From Game Manaer?");
+            Debug.Log($"GameState Before : {gameState}");
+            gameState = state;
+            Debug.Log($"GameState After : {gameState}");
+        }
         
         public void TakeDamage(Character attacker)
         {
-            Debug.Log($"{attacker.characterType} attacked {characterType}!");
             if(attacker.characterType == CharacterType.Player)
             {
                 // Enemy Attack Player
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
             }
             else 
             {
                 // Player Attack Enemy
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
             }
         }
 
