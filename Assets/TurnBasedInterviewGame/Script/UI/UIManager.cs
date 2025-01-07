@@ -21,6 +21,7 @@ namespace TurnBasedGame.UI
         private void GameDataHandler(GameData data)
         {
             // Initalize who attack first.
+            Debug.Log($"is Player Init : {data.PlayerInitiated}");
             if (data.PlayerInitiated)
             {
                 playerTurnImage.color = new Color(255, 255, 255, 255);

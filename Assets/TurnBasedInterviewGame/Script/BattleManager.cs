@@ -19,11 +19,13 @@ namespace TurnBasedGame
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+            StaticGlobalEvent.OnAttackButtonClick += AttackButtonClickHandler;
+            StaticGlobalEvent.OnDefenseButtonClick += DefenseButtonClickHandler;
         }
 
         public IEnumerator PrepareBattle(Character attacker, Character defender, bool playerInitiated)
         {
-            FreezeExploration(attacker,defender);
+            FreezeExploration(attacker, defender);
 
             yield return PlayTransitionEffects();
 
@@ -35,14 +37,15 @@ namespace TurnBasedGame
         private void FreezeExploration(Character attacker, Character defender)
         {
             Debug.Log("Exploration frozen!");
-            StaticGlobalEvent.OnCharacterBattle?.Invoke(attacker,defender);
+            if (attacker is null && defender is null) return;
+            gameManager.CharacterBattleHandler(attacker, defender);
 
         }
 
         private IEnumerator PlayTransitionEffects()
         {
             Debug.Log("Playing transition effects...");
-            yield return new WaitForSeconds(1f); 
+            yield return new WaitForSeconds(1f);
         }
 
         private void TransitionToBattle()
@@ -63,6 +66,18 @@ namespace TurnBasedGame
         {
             // Set Camera Priority
             battlaCamera.Priority = 11;
+        }
+
+
+        private void DefenseButtonClickHandler(bool obj)
+        {
+            Debug.Log($"Player Defense GameManager");
+
+        }
+
+        private void AttackButtonClickHandler(bool obj)
+        {
+            Debug.Log($"Player Attack GameManager");
         }
     }
 

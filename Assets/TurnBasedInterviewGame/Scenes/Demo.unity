@@ -665,57 +665,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2688602924067502009, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3970328587056203332, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: field of view
-      value: 60.000004
-      objectReference: {fileID: 0}
     - target: {fileID: 4052278447973608371, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: attack
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4052278447973608371, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: healthPoint
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4052278447973608371, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: defensePoint
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4052278447973608371, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: characterData
-      value: 
-      objectReference: {fileID: 11400000, guid: bb582459021a46d4b9cf73d15ef8ccb5, type: 2}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalPosition.x
+      propertyPath: gameState
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.481
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98915315
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.14688814
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5577265360399068979, guid: 9ce680c595347de44b732c82ce346d5f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1152,21 +1104,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 59902564975026228, guid: 2dc8eab14d3269c4984b4874b03c788e, type: 3}
-      propertyPath: attack
-      value: 10
+      propertyPath: gameState
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 59902564975026228, guid: 2dc8eab14d3269c4984b4874b03c788e, type: 3}
-      propertyPath: healthPoint
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 59902564975026228, guid: 2dc8eab14d3269c4984b4874b03c788e, type: 3}
-      propertyPath: defensePoint
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 59902564975026228, guid: 2dc8eab14d3269c4984b4874b03c788e, type: 3}
-      propertyPath: characterData
-      value: 
-      objectReference: {fileID: 11400000, guid: 01d2c56f113476f468f64cc7f8376e7b, type: 2}
     - target: {fileID: 1762018173025169312, guid: 2dc8eab14d3269c4984b4874b03c788e, type: 3}
       propertyPath: m_Name
       value: Enemies

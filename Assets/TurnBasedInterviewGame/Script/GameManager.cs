@@ -18,23 +18,7 @@ namespace TurnBasedGame
         {
             DontDestroyOnLoad(this);
             gameState = GameState.Exploring;
-            StaticGlobalEvent.OnAttackButtonClick += AttackButtonClickHandler;
-            StaticGlobalEvent.OnDefenseButtonClick += DefenseButtonClickHandler;
-        }
 
-        private void DefenseButtonClickHandler(bool obj)
-        {
-            Debug.Log($"Player Defense GameManager");
-            // Handler how player defnse, and got attacked by enemy
-            // meaning this would skip turn and player hit/take damage to defense
-            // idk but i think it would be great if this on Player Component rather than GameManager
-            // we'll see. 
-        }
-
-        private void AttackButtonClickHandler(bool obj)
-        {
-            Debug.Log($"Player Attack GameManager");
-            //attack
         }
 
         private void Update()
@@ -43,7 +27,6 @@ namespace TurnBasedGame
             {
                 if (HasSetupBattle) return;
                 gameState = GameState.Battle;
-                StaticGlobalEvent.OnCharacterBattle += CharacterBattleHandler;
                 SetupBattle();
             }
         }
@@ -56,7 +39,7 @@ namespace TurnBasedGame
             HasSetupBattle = true;
         }
 
-        private void CharacterBattleHandler(Character attacker, Character defender)
+        public void CharacterBattleHandler(Character attacker, Character defender)
         {
             this.attacker = attacker;
             this.defender = defender;

@@ -65,23 +65,19 @@ namespace TurnBasedGame
 
         public void SetGameState(GameState state)
         {
-            Debug.Log($"Is This Called From Game Manaer?");
-            Debug.Log($"GameState Before : {gameState}");
             gameState = state;
-            Debug.Log($"GameState After : {gameState}");
         }
         
         public void TakeDamage(Character attacker)
         {
+            Debug.Log($"Attacker Type : {attacker.characterType}");
             if(attacker.characterType == CharacterType.Player)
             {
-                // Enemy Attack Player
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
             }
             else 
             {
-                // Player Attack Enemy
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
+                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
             }
         }
 
