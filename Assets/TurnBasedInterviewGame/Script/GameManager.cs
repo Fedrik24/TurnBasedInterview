@@ -1,5 +1,6 @@
 using TurnBasedGame.Type;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TurnBasedGame
 {
@@ -16,7 +17,11 @@ namespace TurnBasedGame
         {
             DontDestroyOnLoad(this);
             gameState = GameState.Exploring;
+        }
 
+        private void Start()
+        {
+            SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
         }
 
         private void Update()

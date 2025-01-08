@@ -29,6 +29,7 @@ namespace TurnBasedGame
             StaticGlobalEvent.OnDefenseButtonClick += DefenseButtonClickHandler;
             StaticGlobalEvent.OnBuffButtonClick += BuffButtonClickHandler;
             StaticGlobalEvent.OnDeBuffButtonClick += DeBuffButtonClickHandler;
+
         }
 
 
@@ -76,6 +77,10 @@ namespace TurnBasedGame
 
         public void StartBattle()
         {
+            
+            if(battleCamera is null){
+                battleCamera =FindAnyObjectByType<CinemachineVirtualCamera>();
+            }
             battleCamera.Priority = 11;
             Debug.Log("Battle started!");
             if (!isPlayerTurn)
@@ -193,9 +198,8 @@ namespace TurnBasedGame
             Debug.Log($"{winner.characterType} wins the battle!");
             gameData.GameState = GameState.Exploring;
             StaticGlobalEvent.OnGameStateChanged?.Invoke(GameState.Exploring);
-
-            // Reset camera priority
             battleCamera.Priority = 1;
+            StaticGlobalEvent.HasWonGame?.Invoke(true, winner.characterType);
         }
     }
 }

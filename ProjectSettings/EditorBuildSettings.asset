@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TurnBasedInterviewGame/Scenes/Demo.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/TurnBasedInterviewGame/Scenes/Game.unity
     guid: 052e0e82119bd5c45bd77f513e0dd90b
   - enabled: 1

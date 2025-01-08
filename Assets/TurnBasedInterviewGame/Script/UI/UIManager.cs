@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using TurnBasedGame.Type;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace TurnBasedGame.UI
@@ -24,13 +25,42 @@ namespace TurnBasedGame.UI
         [SerializeField] private TextMeshProUGUI damagedText;
         [SerializeField] private Image Buff;
         [SerializeField] private Image Debuff;
+        [SerializeField] private GameObject tutorial;
+        [SerializeField] private GameObject gameFinishPanel;
+        [SerializeField] private TextMeshProUGUI winnerText;
+
+        private float tutorialCloseStart = 0f;
+        private float tutorialCloseMax = 3f;
+        private bool hasTutorialClose = false;
+
+
         private void Awake()
         {
             StaticGlobalEvent.OnGameStateChanged += GameStateHandler;
             StaticGlobalEvent.OnGameData += GameDataHandler;
             StaticGlobalEvent.OnSwitchTurn += SwitchTurnHandler;
             StaticGlobalEvent.OnCharacterDamaged += CharacterDamagedHandler;
+            StaticGlobalEvent.HasWonGame += HasWonGameHandler;
+        }
 
+        private void HasWonGameHandler(bool value, CharacterType type)
+        {
+            if (value)
+            {
+                gameFinishPanel.SetActive(true);
+                winnerText.text = $"Winner  : {type}";
+            }
+        }
+
+        private void Update()
+        {
+            if (hasTutorialClose) return;
+            tutorialCloseStart += Time.deltaTime;
+            if (tutorialCloseStart >= tutorialCloseMax)
+            {
+                tutorial.SetActive(false);
+                hasTutorialClose = true;
+            }
         }
 
         private void CharacterDamagedHandler(float value, bool isPlayerTurn)
@@ -110,6 +140,11 @@ namespace TurnBasedGame.UI
             Debug.Log($"Player OnDebuffClick !");
             Debuff.color = new Color(75 / 255f, 18 / 255f, 33 / 255f, 255 / 255f);
             StaticGlobalEvent.OnDeBuffButtonClick?.Invoke(true);
+        }
+
+        public void OnCloseGameButton()
+        {
+            Application.Quit();
         }
     }
 }

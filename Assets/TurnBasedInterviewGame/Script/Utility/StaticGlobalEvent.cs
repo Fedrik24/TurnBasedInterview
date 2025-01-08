@@ -15,6 +15,7 @@ public static class StaticGlobalEvent
     public static Action<bool> OnSwitchTurn;
     public static Action<float,bool> OnCharacterDamaged;
     public static Action<bool> OnCanEnemyAttack;
+    public static Action<bool, CharacterType> HasWonGame;
 
 
     #region UI Event
