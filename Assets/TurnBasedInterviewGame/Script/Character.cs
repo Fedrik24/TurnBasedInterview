@@ -80,7 +80,6 @@ namespace TurnBasedGame
                 StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
             }
         }
-
     }
 }
 

@@ -50,5 +50,4 @@ namespace TurnBasedGame
             Instantiate(gameData.Defender);
         }
     }
-
 }

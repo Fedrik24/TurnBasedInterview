@@ -450,7 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: 242bcf20a11049d47b93169f5a6ef5ad, type: 2}
   gameManager: {fileID: 759496544}
-  battlaCamera: {fileID: 1248632172}
+  battleCamera: {fileID: 1248632172}
 --- !u!4 &759496543
 Transform:
   m_ObjectHideFlags: 0

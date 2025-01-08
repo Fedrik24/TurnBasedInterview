@@ -5131,9 +5131,9 @@ MonoBehaviour:
   gameState: 0
   characterType: 2
   characterData: {fileID: 11400000, guid: 01d2c56f113476f468f64cc7f8376e7b, type: 2}
-  healthPoint: 100
-  defensePoint: 50
-  attack: 10
+  healthPoint: 1000
+  defensePoint: 100
+  attack: 230
 --- !u!114 &8690011873690234866
 MonoBehaviour:
   m_ObjectHideFlags: 0

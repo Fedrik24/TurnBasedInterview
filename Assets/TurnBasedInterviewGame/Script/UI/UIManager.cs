@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using TurnBasedGame.Type;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,10 +13,48 @@ namespace TurnBasedGame.UI
         [SerializeField] private GameObject AttackPanel;
         [SerializeField] private Image playerTurnImage;
         [SerializeField] private Image enemyTurnImage;
+        [SerializeField] private Sprite playerSpriteImage;
+        [SerializeField] private Sprite enemySpriteImage;
+        [SerializeField] private Slider enemyHealth;
+        [SerializeField] private Slider playerHealth;
+        [SerializeField] private TextMeshProUGUI damagedText;
         private void Awake()
         {
             StaticGlobalEvent.OnGameStateChanged += GameStateHandler;
             StaticGlobalEvent.OnGameData += GameDataHandler;
+            StaticGlobalEvent.OnSwitchTurn += SwitchTurnHandler;
+            StaticGlobalEvent.OnCharacterDamaged += CharacterDamagedHandler;
+
+        }
+
+        private void CharacterDamagedHandler(float value, bool isPlayerTurn)
+        {
+            damagedText.text = $"Damaged Dealt   {value}";
+            if (isPlayerTurn)
+            {
+                enemyHealth.value -= value;
+            }
+            else
+            {
+                playerHealth.value -= value;
+            }
+        }
+
+        private void SwitchTurnHandler(bool value)
+        {
+            if (value)
+            {
+                // Enemy Turn
+                playerTurnImage.sprite = enemySpriteImage;
+                enemyTurnImage.sprite = playerSpriteImage;
+            }
+            else
+            {
+                // Player Turn
+                playerTurnImage.sprite = playerSpriteImage;
+                enemyTurnImage.sprite = enemySpriteImage;
+
+            }
         }
 
         private void GameDataHandler(GameData data)
@@ -45,7 +84,6 @@ namespace TurnBasedGame.UI
         public void OnAttackClick()
         {
             Debug.Log($"Player Attack !");
-            // send event to gamemanager. let the game manager handled.
             StaticGlobalEvent.OnAttackButtonClick?.Invoke(true);
         }
 
@@ -53,6 +91,18 @@ namespace TurnBasedGame.UI
         {
             Debug.Log($"Player Defense !");
             StaticGlobalEvent.OnDefenseButtonClick?.Invoke(true);
+        }
+
+        public void OnBuffClick()
+        {
+            Debug.Log($"Player OnBuffClick !");
+            StaticGlobalEvent.OnBuffButtonClick?.Invoke(true);
+        }
+
+        public void OnDebuffClick()
+        {
+            Debug.Log($"Player OnDebuffClick !");
+            StaticGlobalEvent.OnDeBuffButtonClick?.Invoke(true);
         }
     }
 }

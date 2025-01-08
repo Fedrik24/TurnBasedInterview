@@ -3,7 +3,6 @@ using System.Collections;
 using Cinemachine;
 using TurnBasedGame.Type;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TurnBasedGame
 {
@@ -13,7 +12,11 @@ namespace TurnBasedGame
 
         [SerializeField] private GameData gameData;
         [SerializeField] private GameManager gameManager;
-        [SerializeField] private CinemachineVirtualCamera battlaCamera;
+        [SerializeField] private CinemachineVirtualCamera battleCamera;
+
+        private Character player;
+        private Character enemy;
+        private bool isPlayerTurn;
 
         private void Awake()
         {
@@ -21,7 +24,10 @@ namespace TurnBasedGame
             else Destroy(gameObject);
             StaticGlobalEvent.OnAttackButtonClick += AttackButtonClickHandler;
             StaticGlobalEvent.OnDefenseButtonClick += DefenseButtonClickHandler;
+            StaticGlobalEvent.OnBuffButtonClick += BuffButtonClickHandler;
+            StaticGlobalEvent.OnDeBuffButtonClick += DeBuffButtonClickHandler;
         }
+
 
         public IEnumerator PrepareBattle(Character attacker, Character defender, bool playerInitiated)
         {
@@ -37,9 +43,8 @@ namespace TurnBasedGame
         private void FreezeExploration(Character attacker, Character defender)
         {
             Debug.Log("Exploration frozen!");
-            if (attacker is null && defender is null) return;
+            if (attacker == null || defender == null) return;
             gameManager.CharacterBattleHandler(attacker, defender);
-
         }
 
         private IEnumerator PlayTransitionEffects()
@@ -57,28 +62,136 @@ namespace TurnBasedGame
         public void SetupBattle(Character attacker, Character defender, bool playerInitiated)
         {
             Debug.Log($"Setting up battle: {attacker.characterType} vs {defender.characterType}");
+            player = playerInitiated ? attacker : defender;
+            enemy = playerInitiated ? defender : attacker;
+            isPlayerTurn = playerInitiated;
+
             gameData.GameState = GameState.Battle;
-            gameData.PlayerInitiated = playerInitiated;
             StaticGlobalEvent.OnGameData?.Invoke(gameData);
         }
 
         public void StartBattle()
         {
-            // Set Camera Priority
-            battlaCamera.Priority = 11;
+            battleCamera.Priority = 11;
+            Debug.Log("Battle started!");
+            if (!isPlayerTurn)
+            {
+                Debug.Log($"Should not showing");
+                PerformAttack(enemy, player);
+            }
+        }
+
+        private void AttackButtonClickHandler(bool isPlayerAction)
+        {
+            if (isPlayerTurn)
+            {
+                Debug.Log("Player attacks!");
+                PerformAttack(player, enemy);
+            }
+        }
+
+        private void DefenseButtonClickHandler(bool isPlayerAction)
+        {
+            if (isPlayerTurn)
+            {
+                Debug.Log("Player defends!");
+                PerformDefense(player);
+            }
+        }
+
+        private void BuffButtonClickHandler(bool obj)
+        {
+            if (isPlayerTurn)
+            {
+                PerformBuffDefense(player);
+            }
+        }
+
+        private void DeBuffButtonClickHandler(bool obj)
+        {
+            if (isPlayerTurn)
+            {
+                PerformDebuff(enemy);
+            }
         }
 
 
-        private void DefenseButtonClickHandler(bool obj)
+        private void PerformAttack(Character attacker, Character defender)
         {
-            Debug.Log($"Player Defense GameManager");
+            float damage = attacker.characterData.Attack - defender.characterData.DefensePoint;
+            damage = Mathf.Max(damage, 5);
+            defender.characterData.HealthPoint -= damage;
 
+            Debug.Log($"{attacker.characterType} attacks {defender.characterType} for {damage} damage. Remaining HP: {defender.characterData.HealthPoint}");
+            StaticGlobalEvent.OnCharacterDamaged?.Invoke(damage, isPlayerTurn);
+            if (defender.characterData.HealthPoint <= 0)
+            {
+                EndBattle(attacker);
+            }
+            else
+            {
+                StartCoroutine(SwitchTurn());
+            }
         }
 
-        private void AttackButtonClickHandler(bool obj)
+        private void PerformDebuff(Character enemy)
         {
-            Debug.Log($"Player Attack GameManager");
+            float debuffDefense = enemy.characterData.DefensePoint / 2;
+            debuffDefense = Mathf.Max(debuffDefense, 0);
+            enemy.characterData.DefensePoint = debuffDefense;
+            StartCoroutine(SwitchTurn());
+        }
+
+        private void PerformDefense(Character defender)
+        {
+            defender.characterData.HealthPoint += defender.characterData.DefensePoint - 5;
+            StartCoroutine(SwitchTurn());
+        }
+
+        private void PerformBuffDefense(Character defender)
+        {
+            defender.characterData.DefensePoint *= 1.5f;
+            Debug.Log($"{defender.characterType} defends, increasing defense to {defender.characterData.DefensePoint}");
+
+            StartCoroutine(SwitchTurn());
+        }
+
+        private IEnumerator SwitchTurn()
+        {
+            yield return new WaitForSeconds(1f); // Pause for turn transition
+
+            isPlayerTurn = !isPlayerTurn;
+            StaticGlobalEvent.OnSwitchTurn?.Invoke(isPlayerTurn);
+            Debug.Log(isPlayerTurn ? "Player's turn!" : "Enemy's turn!");
+
+            if (!isPlayerTurn)
+            {
+                EnemyTurn();
+            }
+        }
+
+        private void EnemyTurn()
+        {
+            // Simple AI: Randomly choose between attack or defense
+            bool willAttack = UnityEngine.Random.value > 0.5f;
+            if (willAttack)
+            {
+                PerformAttack(enemy, player);
+            }
+            else
+            {
+                PerformDefense(enemy);
+            }
+        }
+
+        private void EndBattle(Character winner)
+        {
+            Debug.Log($"{winner.characterType} wins the battle!");
+            gameData.GameState = GameState.Exploring;
+            StaticGlobalEvent.OnGameStateChanged?.Invoke(GameState.Exploring);
+
+            // Reset camera priority
+            battleCamera.Priority = 1;
         }
     }
-
 }
