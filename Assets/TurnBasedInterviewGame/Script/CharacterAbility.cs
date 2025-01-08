@@ -1,9 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TurnBasedGame
 {
+    /// <summary>
+    /// This is act as for each character ability.
+    /// like movement or attacking or even attack with range or dashing etc it will 
+    /// and always derived from this. 
+    /// </summary>
     public class CharacterAbility : MonoBehaviour
     {
         public bool IsAlive = true;

@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TurnBasedGame.Ability
 {
+    /// <summary>
+    /// Just simple follow character, the Y-Axis rotations is disabled because,
+    /// i want to try replicate Honkai StarRail game
+    /// </summary>
     public class CameraFollow : MonoBehaviour
     {
         public float mouseSensitivity = 100f;

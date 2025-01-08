@@ -3,6 +3,9 @@ using UnityEngine.AI;
 
 namespace TurnBasedGame.AI.Controller
 {
+    /// <summary>
+    /// This is AI Movement. 
+    /// </summary>
     public class Mover : MonoBehaviour, IAction
     {
         private NavMeshAgent playerAgent;

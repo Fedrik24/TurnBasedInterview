@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 namespace TurnBasedGame.Type
 {
+    /// <summary>
+    /// Charactrer Type
+    /// </summary>
     public enum CharacterType
     {
         None = 0,

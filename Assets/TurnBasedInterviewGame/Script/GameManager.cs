@@ -1,7 +1,5 @@
-using System;
 using TurnBasedGame.Type;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace TurnBasedGame
 {
@@ -43,11 +41,6 @@ namespace TurnBasedGame
         {
             this.attacker = attacker;
             this.defender = defender;
-        }
-        public void UpdateGameStateForAllCharacters()
-        {
-            Instantiate(gameData.Attacker);
-            Instantiate(gameData.Defender);
         }
     }
 }

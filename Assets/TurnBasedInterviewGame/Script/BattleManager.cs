@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace TurnBasedGame
 {
+    /// <summary>
+    /// This is core on how battle script.
+    /// </summary>
     public class BattleManager : MonoBehaviour
     {
         public static BattleManager Instance;
@@ -65,6 +68,7 @@ namespace TurnBasedGame
             player = playerInitiated ? attacker : defender;
             enemy = playerInitiated ? defender : attacker;
             isPlayerTurn = playerInitiated;
+            Debug.Log($"isplayerTurn : {isPlayerTurn}");
 
             gameData.GameState = GameState.Battle;
             StaticGlobalEvent.OnGameData?.Invoke(gameData);

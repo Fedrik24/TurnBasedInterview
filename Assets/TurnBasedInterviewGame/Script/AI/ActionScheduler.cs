@@ -3,11 +3,13 @@ using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
 {
+    /// <summary>
+    /// Keep Tracking for each AI, What they do in current action
+    /// </summary>
     public class ActionScheduler : MonoBehaviour
     {
         private IAction currentAction;
 
-        // Substitution Principle, Pass a type without knowing what type is from...
         public void StartAction(IAction action)
         {
             if (currentAction == action) return;

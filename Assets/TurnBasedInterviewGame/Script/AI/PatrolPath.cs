@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
 {
+    /// <summary>
+    /// Patrol Path, for AI where the AI wanna go. 
+    /// </summary>
     public class PatrolPath : MonoBehaviour
     {
         private const float waypointGizmosRadius = 0.5f;

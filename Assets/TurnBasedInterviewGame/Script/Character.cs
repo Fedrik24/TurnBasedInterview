@@ -5,8 +5,17 @@ using UnityEngine;
 
 namespace TurnBasedGame
 {
+    /// <summary>
+    /// This is act as Core for character model.
+    /// </summary>
     public class Character : MonoBehaviour
     {
+        
+        // Character Data
+        [SerializeField] private float healthPoint;
+        [SerializeField] private float defensePoint;
+        [SerializeField] private int attack;
+
         public Animator animator;
         public GameState gameState;
         private CharacterAbility[] characterAbilities;
@@ -14,15 +23,9 @@ namespace TurnBasedGame
         public CharacterType characterType;
         public CharacterData characterData;
 
-        // Character Data
-        [SerializeField] private float healthPoint;
-        [SerializeField] private float defensePoint;
-        [SerializeField] private int attack;
-        
-
         private void Awake()
         {
-            if(!hasCachedAbility) CacheAbilities();
+            if (!hasCachedAbility) CacheAbilities();
             //gameState = GameState.Exploring; // Temp
             SetUpCharacterData();
         }
@@ -41,7 +44,7 @@ namespace TurnBasedGame
             characterAbilities = gameObject.GetComponentsInChildren<CharacterAbility>();
             List<CharacterAbility> tempCharacterAbilities = new List<CharacterAbility>();
 
-            for(int i = 0; i < characterAbilities.Length; i++)
+            for (int i = 0; i < characterAbilities.Length; i++)
             {
                 tempCharacterAbilities.Add(characterAbilities[i]);
             }
@@ -55,9 +58,12 @@ namespace TurnBasedGame
             UpdateAnimator();
         }
 
-        private void UpdateAnimator(){
-            foreach(CharacterAbility characterAbility in characterAbilities){
-                if(characterAbility.enabled){
+        private void UpdateAnimator()
+        {
+            foreach (CharacterAbility characterAbility in characterAbilities)
+            {
+                if (characterAbility.enabled)
+                {
                     characterAbility.UpdateAnimator();
                 }
             }
@@ -67,18 +73,11 @@ namespace TurnBasedGame
         {
             gameState = state;
         }
-        
+
         public void TakeDamage(Character attacker)
         {
             Debug.Log($"Attacker Type : {attacker.characterType}");
-            if(attacker.characterType == CharacterType.Player)
-            {
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, true)); 
-            }
-            else 
-            {
-                StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, false)); 
-            }
+            StartCoroutine(BattleManager.Instance.PrepareBattle(attacker, this, attacker.characterType == CharacterType.Enemy ? false : true));
         }
     }
 }

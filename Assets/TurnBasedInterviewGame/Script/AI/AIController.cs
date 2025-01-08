@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace TurnBasedGame.AI.Controller
 {
+    /// <summary>
+    /// Main Core for AI to track what the AI do.
+    /// </summary>
     public class AIController : CharacterAbility, IAction
     {
         [SerializeField] private PatrolPath patrolPath;
@@ -14,7 +17,7 @@ namespace TurnBasedGame.AI.Controller
         [SerializeField] private float suspiscionTime = 3f;
         [SerializeField] private float waypointDwellTime = 3f;
         [SerializeField] private float delayAttack = 5f;
-        [SerializeField] private float attackTime = 5f;
+        [SerializeField] private float attackTime = 1f;
 
         private GameObject player;
         private Mover mover;
@@ -26,7 +29,6 @@ namespace TurnBasedGame.AI.Controller
         private float wayPointTolerance = 1f;
         private int currentWaypointIndex = 0;
         private bool canAttackNow = false;
-
         private void Start()
         {
             mover = GetComponent<Mover>();
@@ -141,7 +143,7 @@ namespace TurnBasedGame.AI.Controller
 
         public void Cancel()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

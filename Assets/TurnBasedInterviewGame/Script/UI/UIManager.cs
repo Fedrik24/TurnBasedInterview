@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 namespace TurnBasedGame.UI
 {
+    /// <summary>
+    /// I Pursposely put all in one like this, since it safe time ehe xD
+    /// All related to UI
+    /// </summary>
     public class UIManager : MonoBehaviour
     {
         [SerializeField] private GameObject EnemyInfo;
@@ -18,6 +22,8 @@ namespace TurnBasedGame.UI
         [SerializeField] private Slider enemyHealth;
         [SerializeField] private Slider playerHealth;
         [SerializeField] private TextMeshProUGUI damagedText;
+        [SerializeField] private Image Buff;
+        [SerializeField] private Image Debuff;
         private void Awake()
         {
             StaticGlobalEvent.OnGameStateChanged += GameStateHandler;
@@ -60,7 +66,6 @@ namespace TurnBasedGame.UI
         private void GameDataHandler(GameData data)
         {
             // Initalize who attack first.
-            Debug.Log($"is Player Init : {data.PlayerInitiated}");
             if (data.PlayerInitiated)
             {
                 playerTurnImage.color = new Color(255, 255, 255, 255);
@@ -96,12 +101,14 @@ namespace TurnBasedGame.UI
         public void OnBuffClick()
         {
             Debug.Log($"Player OnBuffClick !");
+            Buff.color = new Color(20 / 255f, 154 / 255f, 149 / 255f, 255 / 255f);
             StaticGlobalEvent.OnBuffButtonClick?.Invoke(true);
         }
 
         public void OnDebuffClick()
         {
             Debug.Log($"Player OnDebuffClick !");
+            Debuff.color = new Color(75 / 255f, 18 / 255f, 33 / 255f, 255 / 255f);
             StaticGlobalEvent.OnDeBuffButtonClick?.Invoke(true);
         }
     }

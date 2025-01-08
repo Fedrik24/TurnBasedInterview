@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace TurnBasedGame.Utility
 {
+    /// <summary>
+    /// Spawner when battle.
+    /// </summary>
     public class SpawnCharacter : MonoBehaviour
     {
         [SerializeField] private GameObject playerSpawnPoint;
@@ -30,16 +33,6 @@ namespace TurnBasedGame.Utility
             }
         }
 
-        public void OnAttackClick()
-        {
-            Debug.Log($"Player Attack !");
-            // send event to gamemanager. let the game manager handled.
-        }
-        
-        public void OnDefenseClick()
-        {
-            Debug.Log($"Player Defense !");
-        }
     }
 
 }

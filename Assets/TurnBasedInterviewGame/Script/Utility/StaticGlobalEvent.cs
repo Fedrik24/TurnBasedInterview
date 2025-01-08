@@ -2,6 +2,10 @@ using System;
 using TurnBasedGame;
 using TurnBasedGame.Type;
 
+/// <summary>
+/// I made this to be able act as Third Party anything.
+/// Think of it as Radio. 
+/// </summary>
 public static class StaticGlobalEvent
 {
     public static Action<GameState> OnGameStateChanged;
@@ -10,6 +14,7 @@ public static class StaticGlobalEvent
     public static Action<CharacterData> CharacterData;
     public static Action<bool> OnSwitchTurn;
     public static Action<float,bool> OnCharacterDamaged;
+    public static Action<bool> OnCanEnemyAttack;
 
 
     #region UI Event

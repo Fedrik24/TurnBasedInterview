@@ -1,9 +1,12 @@
 using System.Collections;
-using TurnBasedGame.AI.Controller;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TurnBasedGame.Ability
 {
+    /// <summary>
+    /// This class is ability for character to be able to attack.
+    /// </summary>
     public class AttackController : CharacterAbility
     {
         [Header("Attack Settings")]
@@ -12,58 +15,34 @@ namespace TurnBasedGame.Ability
         public int damage = 10;
         public LayerMask enemyLayer;
 
-        private float lastAttackTime;
-
-
-        private void Update()
-        {
-            if (character.gameState == Type.GameState.Battle)
-            {
-
-            }
-            else
-            {
-                if (Input.GetButtonDown("Fire1") && Time.time > lastAttackTime + attackCooldown)
-                {
-                    Attack();
-                }
-            }
-        }
-
         public void Attack()
         {
             if (!IsAlive) return;
 
-            lastAttackTime = Time.time;
-
-            // Play attack animation
             UpdateAnimatorBool("IsAttacking", true);
 
-            // Perform attack after a small delay (to sync with animation if needed)
             StartCoroutine(PerformAttack());
         }
 
         private IEnumerator PerformAttack()
         {
-            yield return new WaitForSeconds(0.3f); // Adjust this delay to sync with the animation
+            yield return new WaitForSeconds(0.3f); 
 
-            // Detect enemies within attack range
             Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
+
+            HashSet<Character> processedCharacters = new HashSet<Character>();
 
             foreach (Collider enemy in hitEnemies)
             {
-                enemy.GetComponent<Character>()?.TakeDamage(character);
+                Character character = enemy.GetComponent<Character>();
+                if (character != null && !processedCharacters.Contains(character))
+                {
+                    processedCharacters.Add(character);
+                    character.TakeDamage(this.character);
+                }
             }
 
-            // Reset attack animation
             UpdateAnimatorBool("IsAttacking", false);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            // Visualize attack range in the editor
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
     }
 }

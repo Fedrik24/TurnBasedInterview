@@ -1,26 +1,22 @@
 using System;
 using TurnBasedGame.Type;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Scripting.APIUpdating;
+
 
 namespace TurnBasedGame.Ability
 {
+    /// <summary>
+    /// just Character Movement
+    /// </summary>
     public class PlayerController : CharacterAbility,IDisposable
     {
-        // Player movement settings
+        [SerializeField] private CharacterController characterController;
+
         public float speed = 5f;
         public float jumpHeight = 2f;
         public float gravity = -9.81f;
-
-        // Mouse look settings
         public float mouseSensitivity = 100f;
 
-        // References
-        [SerializeField] private Transform cameraTransform;
-
-        [SerializeField] private CharacterController characterController;
         private Vector3 velocity;
         private float verticalLookRotation = 0f;
         private bool isMove;
@@ -28,7 +24,6 @@ namespace TurnBasedGame.Ability
 
         private void Start()
         {
-            // Lock the cursor to the game window
             Cursor.lockState = CursorLockMode.Locked;
         }
 
